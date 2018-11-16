@@ -81,9 +81,31 @@
         </div>
     </div>
 
+    <script type"text/javascript">
+        let characters = [];
+        fetch('https://swapi.co/api/people')
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                characters = data.results;
+                render(characters, '');
+            })
+        function render(arr, filterText) {
+            const list = document.getElementById('list')
+            //Get filtered characters 
+            const filtered = arr.filter(c => c.name.toLowerCase().match(filterText.toLowerCase()))
+            //Add them to list as LI elements
+            list.innerHTML = filtered.map(c => `<li>${c.name}</li>`).join();
+        }
+        const input = document.querySelector('input')
+        input.addEventListener('keyup', function(event) {
+            render(characters, this.value);
+            
+        })
+    </script>
+
 </body>
 
-<script>
-</script>
 
 </html>
